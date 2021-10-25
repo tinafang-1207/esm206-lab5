@@ -2,29 +2,41 @@
 title: "Lab 5"
 author: "Yutian Fang"
 date: "10/25/2021"
-output: html_document
+output: 
+  html_document: 
+    theme: united
+    toc: yes
+    code_folding: hide
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=TRUE, message = FALSE, warning= FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(effsize)
 ```
 
-## R Markdown
+## Part 1: Confidence Intervals
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+In this section, we'll use the 't.test()' function to calculate confidence intervals.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+### Example 1
+Create a single mock sample containing a number of values, then learn to use 't.test()' to return confidence intervals, and learn about in-line code referencing so our text becomes more reproducible too.
+```{r}
+#Create a mock sample
+otter_length <- c(30,45,28,31,34,46,52,29)
 
-```{r cars}
-summary(cars)
+#Find the confidence interval:
+otter_ci <- t.test(otter_length)
+
+#95% CI: If we take multiple samples from the population and calculate sample mean, we will expect 95% of the chance the true population mean (parameters) will fall into this interval
+
+#Find the standard deviation
+otter_sd <- sd(otter_length)
 ```
+Mean otter length is 36.9 inches $\pm$ 9.3 (mean $\pm$ sd, n = 8) with a 95% confidence interval of [29.1,44.7] inches
 
-## Including Plots
+#### Now, using in-line referencing
 
-You can also embed plots, for example:
+Mean otter length is `r round(otter_ci$estimate, 1)` inches
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
